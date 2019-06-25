@@ -1,35 +1,24 @@
 require('./config/config');
 
-const express = require('express');
 const bodyparser = require('body-parser');
 
-const app = express();
+const mongoose = require('mongoose');
 
-app.use(bodyparser.urlencoded({ extended: false}));
+
+const app = require('./routes/usuario');
+
+app.use(bodyparser.urlencoded({ extended: false }));
+
 app.use(bodyparser.json());
 
+mongoose.connect('mongodb+srv://dara:9yzdost2ZNr8xFKb@cluster0-ymjpg.mongodb.net/cafe', 
+    {useCreateIndex:true, useNewUrlParser: true }
+    ,(err, res) => {
+    if (err) throw err;
 
-app.get('/',(req, res)=> {
-    res.json('Bienvenido Api rest con nodejs');
-});
-
-
-app.get('/usuario',(req, res)=> {
-    res.json('get usuario');
-});
-
-app.post('/usuario',(req, res)=> {
-    res.json('post usuario');
-});
-
-app.put('/usuario',(req, res)=> {
-    res.json('put usuario');
-});
-
-app.delete('/usuario',(req, res)=> {
-    res.json('delete usuario');
+    console.log('Base de datos online!');
 });
 
 app.listen(process.env.PORT, ()=> {
-console.log(`esta corriendo la app ${process.env.PORT}`);
+    console.log(`esta corriendo la app ${process.env.PORT}`);
 });
