@@ -13,14 +13,15 @@ app.use(bodyparser.json());
 app.use(require('./routes/usuario'))
 
 
-mongoose.connect('mongodb+srv://dara:vrUG28LsHvTvvQTo@cluster0-ymjpg.mongodb.net/cafe', 
-    {useCreateIndex:true, useNewUrlParser: true }
+mongoose.connect(process.env.URLDB, { useCreateIndex:true, useNewUrlParser: true }
     ,(err, res) => {
     if (err) throw err;
 
-    console.log('Base de datos online!');
+    console.log(`base de datos online variable ${process.env.URLDB}`);
+    
 });
 
 app.listen(process.env.PORT, ()=> {
     console.log(`esta corriendo la app ${process.env.PORT}`);
+    
 });
