@@ -8,16 +8,10 @@ const Usuario = require('../models/usuario');
 
 
 
-app.get('/usuario',(req, res)=> {
-    
-    let desde = req.params.desde || 0;
-    desde = Number(desde);
-    let limite = req.params.limite || 5;
-    limite = Number(limite);
+app.get('/usuario',(req, res)=> {    
+  
  
-    Usuario.find({estado:true}, 'nombre apellido edad email img estado google')
-    .skip(desde)
-    .limit(limite)
+    Usuario.find({estado:true}, 'nombre apellido edad email img estado google')    
     .exec( (err, usuarioDB) => { 
         if (err) {
             return res.json( { 
