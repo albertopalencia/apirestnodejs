@@ -10,5 +10,4 @@ if (process.env.NODE_ENV === 'dev') {
     urlDB = 'mongodb+srv://dara:vrUG28LsHvTvvQTo@cluster0-ymjpg.mongodb.net/cafe';
 }
 
-
 process.env.URLDB = urlDB;
