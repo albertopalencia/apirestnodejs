@@ -8,7 +8,7 @@ const Usuario = require('../models/usuario');
 
 
 
-app.get('/usuario',(req, res)=> {    
+app.get('/usuario',  , (req, res)=> {    
   
  
     Usuario.find({estado:true}, 'nombre apellido edad email img estado google')    

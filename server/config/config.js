@@ -2,6 +2,14 @@ process.env.PORT = process.env.PORT || 3000;
 
 process.env.NODE_ENV = process.env.NODE_ENV || 'dev';
 
+// fecha vencimiento
+
+// 60 segundo * 60 minutos
+
+process.env.CADUCIDAD_TOKEN = 60 * 60;
+
+process.env.SEED =  process.env.SEED || 'Mateo1010';
+
 let urlDB;
 
 if (process.env.NODE_ENV === 'dev') {
