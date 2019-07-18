@@ -1,8 +1,12 @@
 const express = require('express');
+
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+
 const Usuario = require('../models/usuario');
+
 const app = express();
+
 
 
 app.post('/login', (req, res) => {
@@ -10,45 +14,52 @@ app.post('/login', (req, res) => {
     let body = req.body;
 
     Usuario.findOne({ email: body.email }, (err, usuarioDB) => {
+
         if (err) {
-            return res.status(500).json({ 
-                ok:false,
-               err
+            return res.status(500).json({
+                ok: false,
+                err
             });
         }
 
-        if ( !usuarioDB) {
+        if (!usuarioDB) {
             return res.status(400).json({
-                ok: false ,
+                ok: false,
                 err: {
-                    message: 'Usuario o contraseña incorrectos'
+                    message: '(Usuario) o contraseña incorrectos'
                 }
             });
         }
 
-        if( !bcrypt.compareSync(body.password,usuarioDB.password) ){
+
+        if (!bcrypt.compareSync(body.password, usuarioDB.password)) {
             return res.status(400).json({
-                ok: false ,
+                ok: false,
                 err: {
-                    message: 'Usuario o contraseña incorrectos'
+                    message: 'Usuario o (contraseña) incorrectos'
                 }
             });
         }
 
         let token = jwt.sign({
             usuario: usuarioDB
-         }, 'Mateo2020', { expiresIn: 60 * 60 });
+        }, process.env.SEED, { expiresIn: process.env.CADUCIDAD_TOKEN });
 
         res.json({
-            ok:true,
+            ok: true,
             usuario: usuarioDB,
             token
         });
 
-    })
 
-    
+    });
+
 });
+
+
+
+
+
 
 
 module.exports = app;
