@@ -6,7 +6,7 @@ const _ = require('underscore');
 // modelo de la base de datos
 const Usuario = require('../models/usuario');
 
-const  { verificaToken } = require('../middlewares/autenticacion')
+const  { verificaToken, verificaRole } = require('../middlewares/autenticacion')
 
 
 app.get('/usuario', verificaToken, (req, res) => {
@@ -30,16 +30,11 @@ app.get('/usuario', verificaToken, (req, res) => {
                 });
             }
 
-            Usuario.count({ estado: true }, (err, conteo) => {
-
-                res.json({
+           
+            res.json({
                     ok: true,
-                    usuarios,
-                    cuantos: conteo
-                });
-
-            });
-
+                    usuarios
+          });
 
         });
 
@@ -47,7 +42,7 @@ app.get('/usuario', verificaToken, (req, res) => {
 });
 
 
-app.post('/usuario',(req, res)=> {
+app.post('/usuario',[verificaToken, verificaRole], (req, res)=> {
 
     let body = req.body;
 
@@ -75,7 +70,7 @@ app.post('/usuario',(req, res)=> {
     
 });
 
-app.put('/usuario/:id',(req, res) => {
+app.put('/usuario/:id', [verificaToken, verificaRole],(req, res) => {
 
     let id = req.params.id;
     let body = _.pick(req.body,['nombre','apellido','email','img','edad']);
@@ -97,7 +92,7 @@ app.put('/usuario/:id',(req, res) => {
     });
 });
 
-app.delete('/usuario/:id',(req, res) => {
+app.delete('/usuario/:id', [verificaToken, verificaRole] ,(req, res) => {
 
     let id = req.params.id;      
 
